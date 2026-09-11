@@ -13,8 +13,8 @@ public class UserService {
         this.connection = new ConnectionFactory();
     }
 
-    public void cadastrar(String name, String email){
+    public void register(String name, String email){
         Connection conn = connection.recuperarConexao();
-        new UserDAO(conn).cadastrar(name, email);
+        new UserDAO(conn).register(name, email);
     }
 }

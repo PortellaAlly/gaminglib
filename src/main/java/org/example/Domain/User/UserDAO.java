@@ -11,7 +11,7 @@ public class UserDAO {
         this.conn = connection;
     }
 
-    public void cadastrar(String name, String email) {
+    public void register(String name, String email) {
         String sql = "INSERT INTO user (name, email) VALUES (?, ?)";
 
         try {

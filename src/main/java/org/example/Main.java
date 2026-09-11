@@ -1,21 +1,25 @@
 package org.example;
 
-import org.example.Domain.User.User;
+import org.example.Client.ClientHttpConfiguration;
+import org.example.Service.GameService;
 import org.example.Service.UserService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    private static ClientHttpConfiguration client = new ClientHttpConfiguration();
     private static Scanner scanner = new Scanner(System.in);
     private static UserService userService = new UserService();
+    private static GameService gameService = new GameService(client);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, InterruptedException {
         int decisao = 0;
 
         System.out.println("""
                 **
                 || 1 - Cadastrar uma conta
-                ||
+                || 2 - Buscar um jogo
                 ||
                 ||
                 ||
@@ -27,6 +31,8 @@ public class Main {
             case 1:
                 cadastrarConta();
                 break;
+            case 2:
+                buscarJogo();
             default:
                 System.out.println("bleh");
         }
@@ -39,6 +45,13 @@ public class Main {
         System.out.println("Digite o email:");
         var email = scanner.next();
 
-        userService.cadastrar(name, email);
+        userService.register(name, email);
+    }
+
+    private static void buscarJogo() throws IOException, InterruptedException {
+        System.out.println("Digite o nome do jogo:");
+        var name = scanner.next();
+
+        gameService.searchGame(name);
     }
 }
