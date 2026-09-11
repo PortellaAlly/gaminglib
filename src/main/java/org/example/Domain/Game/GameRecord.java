@@ -1,4 +1,19 @@
 package org.example.Domain.Game;
 
-public record GameRecord(String name, String genre, Integer rawg_id) {
+import java.util.List;
+
+public record GameRecord(
+        Integer count,
+        List<Results> results
+) {
+    public record Results(
+            String name,
+            double rating,
+            Integer id
+    ) {
+        public record Genre(
+                String name
+        ) {
+        }
+    }
 }

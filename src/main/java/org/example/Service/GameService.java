@@ -3,9 +3,16 @@ package org.example.Service;
 import com.google.gson.Gson;
 import org.example.Client.ClientHttpConfiguration;
 import org.example.ConnectionFactory;
+import org.example.Domain.Game.Game;
+import org.example.Domain.Game.GameRecord;
+import tools.jackson.databind.ObjectMapper;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
+import java.util.List;
 
 public class GameService {
     private ConnectionFactory connection;
@@ -20,14 +27,11 @@ public class GameService {
     }
 
     public void searchGame(String name) throws IOException, InterruptedException {
-        String uri = "https://api.rawg.io/api/games?key=BBBB&search=" + name;
+        String uri = "https://api.rawg.io/api/games?key=bbbbb&search=" + name;
         HttpResponse<String> response = client.dispararRequisicaoGet(uri);
         String responseBody = response.body();
 
-        System.out.println(responseBody);
-        /*
-        GameRecord game = gson.fromJson(responseBody, GameRecord.class);
-        System.out.println(game.name() + game.genre() + game.rawg_id());
-        */
+        GameRecord gameRecord = new Gson().fromJson(responseBody, GameRecord.class);
+        System.out.println(gameRecord.results().getFirst().name() + " " + gameRecord.results().getFirst().rating());
     }
 }
