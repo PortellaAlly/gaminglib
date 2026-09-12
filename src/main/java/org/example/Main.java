@@ -17,28 +17,28 @@ public class Main {
         int decisao = 0;
 
         System.out.println("""
-                **
+                ** ========================
                 || 1 - Cadastrar uma conta
                 || 2 - Buscar um jogo
                 ||
                 ||
                 ||
-                **
+                ** ========================
                 """);
         decisao = scanner.nextInt();
 
         switch (decisao){
             case 1:
-                cadastrarConta();
+                registerAccount();
                 break;
             case 2:
-                buscarJogo();
+                searchGame();
             default:
                 System.out.println("bleh");
         }
     }
 
-    private static void cadastrarConta(){
+    private static void registerAccount(){
         System.out.println("Digite o nome:");
         var name = scanner.next();
 
@@ -48,7 +48,7 @@ public class Main {
         userService.register(name, email);
     }
 
-    private static void buscarJogo() throws IOException, InterruptedException {
+    private static void searchGame() throws IOException, InterruptedException {
         System.out.println("Digite o nome do jogo:");
         var name = scanner.next();
 

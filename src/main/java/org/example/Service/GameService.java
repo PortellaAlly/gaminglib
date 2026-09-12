@@ -27,11 +27,16 @@ public class GameService {
     }
 
     public void searchGame(String name) throws IOException, InterruptedException {
-        String uri = "https://api.rawg.io/api/games?key=bbbbb&search=" + name;
+        String uri = "https://api.rawg.io/api/games?key=54dbdcc93ad64664a1003144b6ee135a&search=" + name;
         HttpResponse<String> response = client.dispararRequisicaoGet(uri);
         String responseBody = response.body();
 
         GameRecord gameRecord = new Gson().fromJson(responseBody, GameRecord.class);
-        System.out.println(gameRecord.results().getFirst().name() + " " + gameRecord.results().getFirst().rating());
+
+        for(GameRecord.Results games : gameRecord.results()){
+            String nameResult = games.name();
+
+            System.out.println(nameResult);
+        }
     }
 }
