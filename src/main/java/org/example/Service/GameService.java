@@ -35,8 +35,9 @@ public class GameService {
 
         for(GameRecord.Results games : gameRecord.results()){
             String nameResult = games.name();
+            double ratingResult = games.rating();
 
-            System.out.println(nameResult);
+            System.out.println(nameResult + " - " + ratingResult);
         }
     }
 }

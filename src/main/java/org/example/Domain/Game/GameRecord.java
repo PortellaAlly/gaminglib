@@ -9,7 +9,8 @@ public record GameRecord(
     public record Results(
             String name,
             double rating,
-            Integer id
+            Integer id,
+            List<Genre> genre
     ) {
         public record Genre(
                 String name
