@@ -19,7 +19,7 @@ public class Main {
         System.out.println("""
                 ** ========================
                 || 1 - Cadastrar uma conta
-                || 2 - Buscar um jogo
+                || 2 - Adicionar um jogo
                 ||
                 ||
                 ||
@@ -32,7 +32,7 @@ public class Main {
                 registerAccount();
                 break;
             case 2:
-                searchGame();
+                addGame();
             default:
                 System.out.println("bleh");
         }
@@ -48,10 +48,15 @@ public class Main {
         userService.register(name, email);
     }
 
-    private static void searchGame() throws IOException, InterruptedException {
-        System.out.println("Digite o nome do jogo:");
-        var name = scanner.next();
+    private static void addGame() throws IOException, InterruptedException {
+        System.out.println("Digite seu nome de usuario:");
+        var user_name = scanner.next();
+        var user = userService.listUser(user_name);
 
-        gameService.searchGame(name);
+        System.out.println("Digite o nome do jogo:");
+        var game_name = scanner.next();
+
+        gameService.addGame(user.getId() ,game_name);
+        System.out.println("jogo adicionado a biblioteca!");
     }
 }
