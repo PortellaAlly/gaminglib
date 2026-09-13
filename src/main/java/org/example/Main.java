@@ -52,7 +52,7 @@ public class Main {
         System.out.println("Digite seu nome de usuario:");
         var user_name = scanner.next();
         var user = userService.listUser(user_name);
-        System.out.println(user.getId());
+
         System.out.println("Digite o nome do jogo:");
         var game_name = scanner.next();
 

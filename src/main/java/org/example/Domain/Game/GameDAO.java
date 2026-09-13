@@ -42,11 +42,10 @@ public class GameDAO {
 
             try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
                 if(resultSet.next()){
+                    preparedStatement.close();
                     return resultSet.getInt(1);
                 }
             }
-
-            preparedStatement.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
