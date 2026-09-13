@@ -2,8 +2,7 @@ package org.example.Domain.Game;
 
 import org.example.Domain.User.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
 
 public class GameDAO {
     private Connection conn;
@@ -12,7 +11,7 @@ public class GameDAO {
         this.conn = connection;
     }
 
-    public void addGame(Integer user_id, Integer game_id){
+    public void addGameRelation(Integer user_id, Integer game_id){
         String sql = "INSERT INTO games_user (user_id, game_id)" + "VALUES (?, ?)";
 
         try{
@@ -27,5 +26,30 @@ public class GameDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Integer addGame(GameRecord gameRecord){
+        String sql = "INSERT INTO games (name, genre, rawg_id) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setString(1, gameRecord.results().getFirst().name());
+            preparedStatement.setString(2, null);
+            preparedStatement.setInt(3, gameRecord.results().getFirst().id());
+
+            preparedStatement.execute();
+
+            try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
+                if(resultSet.next()){
+                    return resultSet.getInt(1);
+                }
+            }
+
+            preparedStatement.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package org.example.Service;
 import com.google.gson.Gson;
 import org.example.Client.ClientHttpConfiguration;
 import org.example.ConnectionFactory;
+import org.example.Domain.Game.Game;
 import org.example.Domain.Game.GameDAO;
 import org.example.Domain.Game.GameRecord;
 
@@ -28,18 +29,9 @@ public class GameService {
         String responseBody = response.body();
 
         GameRecord gameRecord = new Gson().fromJson(responseBody, GameRecord.class);
-        var game_id = gameRecord.results().getFirst().id();
 
         Connection conn = connection.recuperarConexao();
-        new GameDAO(conn).addGame(user_id, game_id);
-        //gameRecord.results().getFirst().id()
-
-        /*
-        for(GameRecord.Results games : gameRecord.results()){
-            String nameResult = games.name();
-            double ratingResult = games.rating();
-
-            System.out.println(nameResult + " - " + ratingResult);
-        }*/
+        Integer game_id = new GameDAO(conn).addGame(gameRecord);
+        new GameDAO(conn).addGameRelation(user_id, game_id);
     }
 }
