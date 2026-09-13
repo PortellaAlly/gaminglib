@@ -16,8 +16,6 @@ public class GameService {
     private ClientHttpConfiguration client;
     private Gson gson = new Gson();
 
-    // GameRecord gameRecord = new GameRecord(name, genre, rawg_id); - jaja isso vai ser usado pra salvar um jogo no DB
-
     public GameService(ClientHttpConfiguration client){
         this.connection = new ConnectionFactory();
         this.client = client;
@@ -31,7 +29,17 @@ public class GameService {
         GameRecord gameRecord = new Gson().fromJson(responseBody, GameRecord.class);
 
         Connection conn = connection.recuperarConexao();
-        Integer game_id = new GameDAO(conn).addGame(gameRecord);
-        new GameDAO(conn).addGameRelation(user_id, game_id);
+        if(verifyExists(gameRecord.results().getFirst().id()) == null){
+            Integer game_id = new GameDAO(conn).addGame(gameRecord);
+            new GameDAO(conn).addGameRelation(user_id, game_id);
+        } else{
+            Integer game_id = verifyExists(gameRecord.results().getFirst().id()).getId();
+            new GameDAO(conn).addGameRelation(user_id, game_id);
+        }
+    }
+
+    public Game verifyExists(Integer rawgid){
+        Connection conn = connection.recuperarConexao();
+        return new GameDAO(conn).verify(rawgid);
     }
 }

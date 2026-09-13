@@ -1,7 +1,5 @@
 package org.example.Domain.Game;
 
-import org.example.Domain.User.User;
-
 import java.sql.*;
 
 public class GameDAO {
@@ -50,5 +48,25 @@ public class GameDAO {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public Game verify(Integer rawg_id) {
+        String sql = "SELECT id FROM games WHERE rawg_id = ?";
+         try {
+             PreparedStatement preparedStatement = conn.prepareStatement(sql);
+             preparedStatement.setInt(1, rawg_id);
+
+             ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()){
+                Integer id = resultSet.getInt(1);
+
+                return new Game(id);
+            }
+         } catch (SQLException e) {
+             throw new RuntimeException(e);
+         }
+
+         return null;
     }
 }

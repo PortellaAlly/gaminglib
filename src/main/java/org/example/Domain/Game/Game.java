@@ -6,6 +6,10 @@ public class Game {
     private String genre;
     private Integer rawg_id;
 
+    public Game(Integer id){
+        this.id = id;
+    }
+
     public Game(Integer id, String name, String genre, Integer rawg_id){
         this.id = id;
         this.name = name;
