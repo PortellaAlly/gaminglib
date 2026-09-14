@@ -56,6 +56,7 @@ public class Main {
         System.out.println("Digite o nome do jogo:");
         var game_name = scanner.next();
 
+        System.out.println("Selecione o jogo que deseja:");
         gameService.addGame(user.getId() ,game_name);
         System.out.println("jogo adicionado a biblioteca!");
     }

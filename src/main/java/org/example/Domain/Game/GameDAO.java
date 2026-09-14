@@ -19,7 +19,6 @@ public class GameDAO {
             preparedStatement.setInt(2, game_id);
 
             preparedStatement.execute();
-            preparedStatement.close();
             conn.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -40,7 +39,6 @@ public class GameDAO {
 
             try(ResultSet resultSet = preparedStatement.getGeneratedKeys()){
                 if(resultSet.next()){
-                    preparedStatement.close();
                     return resultSet.getInt(1);
                 }
             }
