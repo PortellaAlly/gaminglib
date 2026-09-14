@@ -51,7 +51,7 @@ public class GameService {
 
         Connection conn = connection.recuperarConexao();
         if(verifyExists(gameSelected.id()) == null){
-            Integer game_id = new GameDAO(conn).addGame(gameRecord);
+            Integer game_id = new GameDAO(conn).addGame(gameSelected);
             new GameDAO(conn).addGameRelation(user_id, game_id);
         } else{
             Integer game_id = verifyExists(gameSelected.id()).getId();

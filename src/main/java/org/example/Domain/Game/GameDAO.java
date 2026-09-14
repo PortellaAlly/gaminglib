@@ -25,15 +25,15 @@ public class GameDAO {
         }
     }
 
-    public Integer addGame(GameRecord gameRecord){
+    public Integer addGame(GameRecord.Results gameRecord){
         String sql = "INSERT INTO games (name, genre, rawg_id) VALUES (?, ?, ?)";
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, gameRecord.results().getFirst().name());
+            preparedStatement.setString(1, gameRecord.name());
             preparedStatement.setString(2, null);
-            preparedStatement.setInt(3, gameRecord.results().getFirst().id());
+            preparedStatement.setInt(3, gameRecord.id());
 
             preparedStatement.execute();
 
