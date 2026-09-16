@@ -1,6 +1,7 @@
 package org.example.Domain.Game;
 
 import java.sql.*;
+import java.util.NoSuchElementException;
 
 public class GameDAO {
     private Connection conn;
@@ -32,7 +33,11 @@ public class GameDAO {
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, gameRecord.name());
-            preparedStatement.setString(2, null);
+            try {
+                preparedStatement.setString(2, gameRecord.genres().getFirst().name());
+            } catch (NoSuchElementException e){
+                preparedStatement.setString(2, null);
+            }
             preparedStatement.setInt(3, gameRecord.id());
 
             preparedStatement.execute();

@@ -10,9 +10,9 @@ public record GameRecord(
             String name,
             double rating,
             Integer id,
-            List<Genre> genre
+            List<Genres> genres
     ) {
-        public record Genre(
+        public record Genres(
                 String name
         ) {
         }

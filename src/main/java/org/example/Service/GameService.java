@@ -12,6 +12,7 @@ import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GameService {
@@ -38,14 +39,20 @@ public class GameService {
         System.out.println("Jogos disponiveis: ");
         for (GameRecord.Results gameRecord1 : games){
             String name = gameRecord1.name();
-
-            i++;
-            System.out.println(i + " - " + name);
+            String genre;
+            try {
+                genre = gameRecord1.genres().getFirst().name();
+            } catch (NoSuchElementException e) {
+                genre = null;
+            }
+                    i++;
+            System.out.println(i + " - " + name + " | " + genre);
         }
 
         System.out.print("Selecione seu jogo: ");
         int gamechosen = scanner.nextInt();
         int indexList = gamechosen - 1;
+
 
         GameRecord.Results gameSelected = games.get(indexList);
 
