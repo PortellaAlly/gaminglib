@@ -10,6 +10,10 @@ public class Game {
         this.id = id;
     }
 
+    public Game(String name){
+        this.name = name;
+    }
+
     public Game(Integer id, String name, String genre, Integer rawg_id){
         this.id = id;
         this.name = name;
@@ -19,5 +23,14 @@ public class Game {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return "Game: " + getName();
     }
 }

@@ -20,7 +20,7 @@ public class Main {
                 ** ========================
                 || 1 - Cadastrar uma conta
                 || 2 - Adicionar um jogo
-                ||
+                || 3 - Abrir a biblioteca
                 ||
                 ||
                 ** ========================
@@ -33,6 +33,9 @@ public class Main {
                 break;
             case 2:
                 addGame();
+                break;
+            case 3:
+                openLib();
             default:
                 System.out.println("bleh");
         }
@@ -56,8 +59,16 @@ public class Main {
         System.out.println("Digite o nome do jogo:");
         var game_name = scanner.next();
 
-        System.out.println("Selecione o jogo que deseja:");
         gameService.addGame(user.getId() ,game_name);
         System.out.println("jogo adicionado a biblioteca!");
+    }
+
+    private static void openLib(){
+        System.out.println("Digite seu nome de usuario:");
+        var user_name = scanner.next();
+        var user = userService.listUser(user_name).getName();
+
+        var lib = userService.openLib(user);
+        lib.stream().forEach(System.out::println);
     }
 }

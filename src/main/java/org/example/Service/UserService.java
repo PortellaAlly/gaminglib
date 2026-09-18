@@ -1,10 +1,12 @@
 package org.example.Service;
 
 import org.example.ConnectionFactory;
+import org.example.Domain.Game.Game;
 import org.example.Domain.User.User;
 import org.example.Domain.User.UserDAO;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class UserService {
 
@@ -22,5 +24,10 @@ public class UserService {
     public User listUser(String name){
         Connection conn = connection.recuperarConexao();
         return new UserDAO(conn).listUser(name);
+    }
+
+    public List<Game> openLib(String user_name){
+        Connection conn = connection.recuperarConexao();
+        return new UserDAO(conn).openLib(user_name);
     }
 }
