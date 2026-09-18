@@ -57,13 +57,14 @@ public class GameService {
         GameRecord.Results gameSelected = games.get(indexList);
 
         Connection conn = connection.recuperarConexao();
-        if(verifyExists(gameSelected.id()) == null){
-            Integer game_id = new GameDAO(conn).addGame(gameSelected);
-            new GameDAO(conn).addGameRelation(user_id, game_id);
+        var verify = verifyExists(gameSelected.id());
+        Integer game_id;
+        if(verify == null){
+            game_id = new GameDAO(conn).addGame(gameSelected);
         } else{
-            Integer game_id = verifyExists(gameSelected.id()).getId();
-            new GameDAO(conn).addGameRelation(user_id, game_id);
+            game_id = verify.getId();
         }
+        new GameDAO(conn).addGameRelation(user_id, game_id);
     }
 
     public Game verifyExists(Integer rawgid){
