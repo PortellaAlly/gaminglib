@@ -1,5 +1,7 @@
 package org.example.Domain.Game;
 
+import org.example.Domain.User.User;
+
 import java.sql.*;
 import java.util.NoSuchElementException;
 

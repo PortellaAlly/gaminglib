@@ -70,7 +70,12 @@ public class Main {
         var user_name = scanner.next();
         var user = userService.listUser(user_name).getName();
 
-        var lib = userService.openLib(user);
-        lib.stream().forEach(System.out::println);
+        var gameid = userService.openLib(user);
+
+        System.out.println("Deseja mudar o status de algum jogo?(Y/N)");
+        var decision = scanner.next().toUpperCase();
+        if(decision.equals("Y")){
+            userService.changeStatus(gameid, user_name);
+        }
     }
 }

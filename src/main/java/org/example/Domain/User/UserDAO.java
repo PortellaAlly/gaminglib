@@ -49,9 +49,6 @@ public class UserDAO {
                 return new User(user_id, user_name, user_email);
             }
 
-            resultSet.close();
-            preparedStatement.close();
-            conn.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -59,7 +56,7 @@ public class UserDAO {
     }
 
     public List<Game> openLib(String user_name){
-        String sql = " SELECT games.name AS game FROM games_user JOIN user on user.id = games_user.user_id JOIN games on games.id = games_user.game_id WHERE user.name = ?";
+        String sql = " SELECT games.name, games_user.status, games.id AS game FROM games_user JOIN user on user.id = games_user.user_id JOIN games on games.id = games_user.game_id WHERE user.name = ?";
         List<Game> games = new ArrayList<>();
 
         try{
@@ -69,12 +66,30 @@ public class UserDAO {
 
             while(resultSet.next()){
                 String game = resultSet.getString(1);
+                String status = resultSet.getString(2);
+                Integer id = resultSet.getInt(3);
 
-                games.add(new Game(game));
+                games.add(new Game(game, status, id));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return games;
+    }
+
+    public void changeStatus(Integer gameId, Integer userId, String status){
+        String sql = "UPDATE games_user SET status = ? WHERE game_id = ? AND user_id = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, gameId);
+            preparedStatement.setInt(3, userId);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

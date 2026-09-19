@@ -7,10 +7,14 @@ import org.example.Domain.Game.Game;
 import org.example.Domain.Game.GameDAO;
 import org.example.Domain.Game.GameRecord;
 import org.example.Domain.Platform.PlatformDAO;
+import org.example.Domain.User.User;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;

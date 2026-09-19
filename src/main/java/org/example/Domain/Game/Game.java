@@ -3,6 +3,7 @@ package org.example.Domain.Game;
 public class Game {
     private Integer id;
     private String name;
+    private String status;
     private String genre;
     private Integer rawg_id;
 
@@ -10,15 +11,10 @@ public class Game {
         this.id = id;
     }
 
-    public Game(String name){
+    public Game(String name, String status, Integer id){
         this.name = name;
-    }
-
-    public Game(Integer id, String name, String genre, Integer rawg_id){
+        this.status = status;
         this.id = id;
-        this.name = name;
-        this.genre = genre;
-        this.rawg_id = rawg_id;
     }
 
     public Integer getId() {
@@ -29,8 +25,12 @@ public class Game {
         return name;
     }
 
-    @Override
-    public String toString() {
-        return "Game: " + getName();
+    public String getStatus() {
+        return status;
     }
+
+    /*@Override
+    public String toString() {
+        return "\n" + getName() + getStatus();
+    }*/
 }
