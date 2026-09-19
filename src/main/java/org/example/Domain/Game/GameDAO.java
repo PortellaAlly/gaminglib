@@ -20,7 +20,7 @@ public class GameDAO {
             preparedStatement.setInt(2, game_id);
 
             preparedStatement.execute();
-            conn.close();
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

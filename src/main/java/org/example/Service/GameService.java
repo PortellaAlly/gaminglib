@@ -6,22 +6,24 @@ import org.example.ConnectionFactory;
 import org.example.Domain.Game.Game;
 import org.example.Domain.Game.GameDAO;
 import org.example.Domain.Game.GameRecord;
+import org.example.Domain.Platform.PlatformDAO;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.sql.Connection;
-import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GameService {
+    private PlatformService platformService;
     private ConnectionFactory connection;
     private ClientHttpConfiguration client;
     private Gson gson = new Gson();
     private Scanner scanner = new Scanner(System.in);
 
-    public GameService(ClientHttpConfiguration client){
+    public GameService(PlatformService platformService, ClientHttpConfiguration client){
+        this.platformService = platformService;
         this.connection = new ConnectionFactory();
         this.client = client;
     }
@@ -53,11 +55,14 @@ public class GameService {
         int gamechosen = scanner.nextInt();
         int indexList = gamechosen - 1;
 
+        i = 0;
 
         GameRecord.Results gameSelected = games.get(indexList);
+        List<GameRecord.Results.Platforms> platform = gameSelected.platforms();
 
         Connection conn = connection.recuperarConexao();
-        var verify = verifyExists(gameSelected.id());
+
+        var verify = verifyGameExists(gameSelected.id());
         Integer game_id;
         if(verify == null){
             game_id = new GameDAO(conn).addGame(gameSelected);
@@ -65,9 +70,21 @@ public class GameService {
             game_id = verify.getId();
         }
         new GameDAO(conn).addGameRelation(user_id, game_id);
+
+        for(GameRecord.Results.Platforms platformList : platform){
+            String name = platformList.platform().name();
+            Integer platform_id;
+            var verifyPlatform = platformService.verifyPlatform(name);
+            if(verifyPlatform == null){
+                platform_id = new PlatformDAO(conn).addPlatform(name);
+            } else {
+                platform_id = verifyPlatform.getId();
+            }
+            new PlatformDAO(conn).addPlatformRelation(game_id, platform_id);
+        }
     }
 
-    public Game verifyExists(Integer rawgid){
+    public Game verifyGameExists(Integer rawgid){
         Connection conn = connection.recuperarConexao();
         return new GameDAO(conn).verify(rawgid);
     }

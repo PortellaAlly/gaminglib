@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.Client.ClientHttpConfiguration;
 import org.example.Service.GameService;
+import org.example.Service.PlatformService;
 import org.example.Service.UserService;
 
 import java.io.IOException;
@@ -10,8 +11,9 @@ import java.util.Scanner;
 public class Main {
     private static ClientHttpConfiguration client = new ClientHttpConfiguration();
     private static Scanner scanner = new Scanner(System.in);
+    private static PlatformService platformService = new PlatformService();
     private static UserService userService = new UserService();
-    private static GameService gameService = new GameService(client);
+    private static GameService gameService = new GameService(platformService, client);
 
     public static void main(String[] args) throws IOException, InterruptedException {
         int decisao = 0;
