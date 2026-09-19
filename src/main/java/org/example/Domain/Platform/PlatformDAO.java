@@ -48,15 +48,16 @@ public class PlatformDAO {
     }
 
     public Platform verify(String name){
-        String sql = "SELECT name FROM platform WHERE name = ?";
+        String sql = "SELECT * FROM platform WHERE name = ?";
             try{
                 PreparedStatement preparedStatement = conn.prepareStatement(sql);
                 preparedStatement.setString(1, name);
                 ResultSet resultSet = preparedStatement.executeQuery();
 
                 if(resultSet.next()){
-                    String platName = resultSet.getString(1);
-                    return new Platform(platName);
+                    Integer platID = resultSet.getInt(1);
+                    String platName = resultSet.getString(2);
+                    return new Platform(platID, platName);
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
