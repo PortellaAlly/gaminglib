@@ -13,13 +13,14 @@ public class GameDAO {
     }
 
     public void addGameRelation(Integer user_id, Integer game_id){
-        String sql = "INSERT INTO games_user (user_id, game_id)" + "VALUES (?, ?)";
+        String sql = "INSERT INTO games_user (user_id, game_id, status)" + "VALUES (?, ?, ?)";
 
         try{
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
 
             preparedStatement.setInt(1, user_id);
             preparedStatement.setInt(2, game_id);
+            preparedStatement.setString(3, "NUNCA JOGUEI");
 
             preparedStatement.execute();
 

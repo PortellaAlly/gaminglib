@@ -59,9 +59,10 @@ public class UserService {
 
         for (Game gameList : gamesList){
             String name = gameList.getName();
+            String status = gameList.getStatus();
 
             i++;
-            System.out.println(i+" | "+name);
+            System.out.println(i+" | "+name+" | "+status);
         }
         System.out.println("Selecione um jogo: ");
         int gameChosen = scanner.nextInt();
